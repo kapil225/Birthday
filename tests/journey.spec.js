@@ -108,7 +108,10 @@ test('videos open with controls and the slideshow waits for playback to finish',
  });
  await page.reload();
  await page.getByRole('button',{name:'Open Your Surprise',exact:true}).click();
- await page.getByRole('button',{name:/Open video/}).click();
+ await expect(page.locator('.memory-video-collection,.video-space')).toHaveCount(0);
+ await page.getByRole('button',{name:'Relive Memories'}).click();
+ await page.getByRole('button',{name:'Pause slideshow',exact:true}).click();
+ await page.getByRole('button',{name:'Previous memory'}).click();
  const video=page.locator('.memory-video');
  await expect(video).toHaveAttribute('controls','');
  await expect.poll(()=>video.evaluate(v=>v.readyState)).toBeGreaterThanOrEqual(2);

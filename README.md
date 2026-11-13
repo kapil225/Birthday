@@ -123,7 +123,7 @@ Regenerate the included instrumental with `python3 scripts/create-birthday-music
 
 ## Videos
 
-Add videos to `birthday-for-u/photos/` and run `npm run photos`, or put browser-ready files directly in `public/videos/` and restart Vite. Videos appear in their own cards below the animated collage with a play overlay; tap one to open native playback controls in the fullscreen viewer. No video captions are shown. Until videos are added, the chapter contains a subtle space for them.
+Add videos to `birthday-for-u/photos/` and run `npm run photos`, or put browser-ready files directly in `public/videos/` and restart Vite. The Memories chapter shows only the photo collage, with no separate video section or placeholder. Added videos remain available through the fullscreen slideshow with native playback controls.
 
 Use H.264/AAC MP4 for the broadest browser support, or WebM. MOV and M4V are also discovered, but their playback depends on the browser and codec; unsupported videos offer a download link. Videos are copied without transcoding. Video sound starts only when the visitor presses play. The slideshow waits on video slides and advances after a video ends when slideshow playback is enabled. Pressing next/previous or closing the viewer stops the video by unmounting it.
 
@@ -144,7 +144,7 @@ Each tile preloads and decodes its next thumbnail before transitioning. A shared
 
 Dissolves, 3D turns, gentle rotations, and slides run through Motion values without React rendering every frame. Tile positions stay in CSS Grid throughout. Motion pauses when the wall leaves the viewport, the tab becomes hidden, the visitor presses Pause, or a fullscreen memory opens. Closing the viewer resumes an active wall. Timers, image preloads, event listeners, and animation controls are cleaned up on unmount.
 
-With reduced motion enabled, automatic transitions, floating, zoom, and hover tilt stop; **Shuffle memories** changes the selection without animation. Videos retain their separate native fullscreen playback controls and do not autoplay with the collage. The original 100 pastel illustration placeholders remain available when the collection is empty or a photo fails to load.
+With reduced motion enabled, automatic transitions, floating, zoom, and hover tilt stop; **Shuffle memories** changes the selection without animation. Videos in the fullscreen slideshow retain native playback controls and do not autoplay with the collage. The original 100 pastel illustration placeholders remain available when the collection is empty or a photo fails to load.
 
 Files for this chapter:
 

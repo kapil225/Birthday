@@ -1,8 +1,7 @@
 import { useState,useEffect,useCallback,useMemo,useRef } from 'react';
-import { Play,Pause,Film,Shuffle,Sparkles } from 'lucide-react';
+import { Play,Pause,Shuffle,Sparkles } from 'lucide-react';
 import { useInView,useReducedMotion } from 'framer-motion';
 import { memories } from '../data/memories';
-import { VideoPreview } from './MemoryVideo';
 import PhotoLightbox from './PhotoLightbox';
 import MemoryCollage,{useCollageTileCount} from './MemoryCollage';
 import { Section } from './Shared';
@@ -17,7 +16,6 @@ export default function MemoryGallery({onMusic}) {
   const wall=useRef(null);
   const inView=useInView(wall,{amount:.08});
   const photoIndices=useMemo(()=>memories.map((memory,index)=>memory.type==='video'?null:index).filter(index=>index!==null),[]);
-  const videos=useMemo(()=>memories.map((memory,index)=>({memory,index})).filter(({memory})=>memory.type==='video'),[]);
   const count=useCollageTileCount(photoIndices.length);
   const [renderedCount,setRenderedCount]=useState(count);
   // Keep the clicked tile mounted while a viewer is open, including rotation.
@@ -45,7 +43,6 @@ export default function MemoryGallery({onMusic}) {
       </div>
       {reduced&&<p className="collage-motion-note">A quieter little universe, following your reduced motion setting.</p>}
     </div>
-    {videos.length>0?<div className="memory-video-collection" aria-label="Video memories">{videos.map(({memory,index})=><button className="collage-video" key={memory.id} onClick={()=>setViewer({index,slideshow:false})} aria-label={`Open video ${index+1} of ${memories.length}`}><VideoPreview memory={memory}/></button>)}</div>:<div className="video-space"><Film size={30} strokeWidth={1}/><h3>A little room for moving memories.</h3><p>Your videos will appear here alongside the photos.</p></div>}
     {viewer&&<PhotoLightbox {...viewer} onClose={close} onMusic={onMusic}/>}
   </Section>;
 }

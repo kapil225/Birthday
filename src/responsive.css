@@ -99,7 +99,6 @@ button,a,select{touch-action:manipulation}
   .gallery-intro p br,.interlude p br,.wish-message h3 br{display:none}
   .photo-track{margin-right:0;padding-right:2px;scroll-padding-inline:2px;-webkit-overflow-scrolling:touch}
   .photo-slide{flex-basis:86%}
-  .video-space p{font-size:13px}
   .interlude{padding:54px 7%}
   .interlude p{font-size:28px}
   .interlude>span{font-size:9px;line-height:1.8;display:block;max-width:280px;margin:auto}

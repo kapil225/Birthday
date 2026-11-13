@@ -31,7 +31,7 @@ And most importantly, keep shining.
 Happy Birthday once again, U! ❤️✨
 
 With endless gratitude,
-Someone who's really lucky to have you as a friend.`;
+Someone who's really lucky to have you in my life.`;
 export const finalMessage = `Dear U,
 
 If there's one thing I hope you remember today, it's this:

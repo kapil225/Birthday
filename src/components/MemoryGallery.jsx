@@ -1,7 +1,51 @@
-import { useState,useEffect,useCallback,useRef } from 'react';
-import { ArrowRight,ChevronLeft,ChevronRight,Play,Pause,Images,Heart } from 'lucide-react';
+import { useState,useEffect,useCallback,useMemo,useRef } from 'react';
+import { Play,Pause,Film,Shuffle,Sparkles } from 'lucide-react';
+import { useInView,useReducedMotion } from 'framer-motion';
 import { memories } from '../data/memories';
-import { Modal,Section } from './Shared';
-export function MemoryImage({memory,...props}){const [failed,setFailed]=useState(false);return <img {...props} src={!failed&&memory.src?memory.src:memory.placeholder} alt={memory.alt} onError={()=>setFailed(true)}/>;}
-export function PhotoLightbox({index,slideshow,onClose,onMusic}){const [current,setCurrent]=useState(index);const [playing,setPlaying]=useState(slideshow);const [speed,setSpeed]=useState(5);const touch=useRef(null);const move=useCallback(delta=>setCurrent(i=>(i+delta+memories.length)%memories.length),[]);useEffect(()=>{const key=e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[move]);useEffect(()=>{if(!playing)return;const timer=setInterval(()=>move(1),speed*1000);return()=>clearInterval(timer);},[playing,speed,move]);return <Modal onClose={onClose} label={slideshow?'Memory slideshow':'Photo viewer'} className="photo-modal"><div className="viewer-top"><span>{slideshow?'OUR LITTLE MEMORY FILM':'A LITTLE MOMENT TO TREASURE'}</span><span>{current+1} / {memories.length}</span></div><div className={`viewer-image ${playing?'is-playing':''}`} onTouchStart={e=>touch.current=e.changedTouches[0].clientX} onTouchEnd={e=>{if(touch.current!==null){const d=e.changedTouches[0].clientX-touch.current;if(Math.abs(d)>45)move(d<0?1:-1);touch.current=null;}}}><MemoryImage key={current} memory={memories[current]}/></div><p className="script viewer-caption">{memories[current].caption}</p>{!memories[current].src&&<span className="placeholder-label">A little space for your own photo</span>}<div className="viewer-controls"><button className="icon-button" aria-label="Previous photo" onClick={()=>move(-1)}><ChevronLeft/></button><button className="icon-button" aria-label={playing?'Pause slideshow':'Play slideshow'} onClick={()=>setPlaying(p=>!p)}>{playing?<Pause/>:<Play/>}</button><button className="icon-button" aria-label="Next photo" onClick={()=>move(1)}><ChevronRight/></button><label>Speed <select value={speed} onChange={e=>setSpeed(Number(e.target.value))}><option value={3}>3 sec</option><option value={5}>5 sec</option><option value={8}>8 sec</option></select></label><button className="text-button" onClick={onMusic}>Music on / off</button></div></Modal>;}
-export default function MemoryGallery({onMusic}){const [count,setCount]=useState(12);const [viewer,setViewer]=useState(null);const close=useCallback(()=>setViewer(null),[]);return <Section id="memories" number="03" eyebrow="THE MOMENTS WE KEEP" title={<>Our little<br/><em>memory universe.</em></>} className="memory-section"><div className="gallery-intro"><p>Some moments become memories. Some people<br/>make those memories unforgettable.</p><button className="outline" onClick={()=>setViewer({index:0,slideshow:true})}><Play size={15}/> Relive Our Memories</button></div><div className="memory-wall">{memories.slice(0,count).map((m,i)=><button className="polaroid" style={{'--rotation':`${m.rotation}deg`}} key={m.id} onClick={()=>setViewer({index:i,slideshow:false})} aria-label={`Open memory ${m.id}: ${m.caption}`}><span className="photo-tape"/><div className="photo-container"><MemoryImage memory={m} loading="lazy" width="400" height="450"/>{!m.src&&<span className="photo-placeholder">YOUR MEMORY HERE</span>}</div><span className="polaroid-caption">{m.caption}</span><span className="photo-number">{String(m.id).padStart(2,'0')} <Heart size={12}/></span></button>)}</div><div className="gallery-bottom"><p><Images size={15}/> {Math.min(count,memories.length)} of {memories.length} little moments</p><div className="button-row">{count<memories.length&&<><button className="primary" onClick={()=>setCount(n=>Math.min(n+12,memories.length))}>Show More Memories <Heart size={15}/></button><button className="text-button" onClick={()=>setCount(memories.length)}>Show All Memories <ArrowRight size={15}/></button></>}{count>12&&<button className="text-button" onClick={()=>{setCount(12);document.getElementById('memories').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}>Show Less</button>}</div></div>{viewer&&<PhotoLightbox {...viewer} onClose={close} onMusic={onMusic}/>}</Section>;}
+import { VideoPreview } from './MemoryVideo';
+import PhotoLightbox from './PhotoLightbox';
+import MemoryCollage,{useCollageTileCount} from './MemoryCollage';
+import { Section } from './Shared';
+import './MemoryCollage.css';
+
+export default function MemoryGallery({onMusic}) {
+  const reduced=useReducedMotion();
+  const [running,setRunning]=useState(true);
+  const [viewer,setViewer]=useState(null);
+  const [offset,setOffset]=useState(0);
+  const [hidden,setHidden]=useState(()=>document.hidden);
+  const wall=useRef(null);
+  const inView=useInView(wall,{amount:.08});
+  const photoIndices=useMemo(()=>memories.map((memory,index)=>memory.type==='video'?null:index).filter(index=>index!==null),[]);
+  const videos=useMemo(()=>memories.map((memory,index)=>({memory,index})).filter(({memory})=>memory.type==='video'),[]);
+  const count=useCollageTileCount(photoIndices.length);
+  const [renderedCount,setRenderedCount]=useState(count);
+  // Keep the clicked tile mounted while a viewer is open, including rotation.
+  useEffect(()=>{if(!viewer)setRenderedCount(count);},[count,viewer]);
+  const close=useCallback(()=>setViewer(null),[]);
+  const openPhoto=useCallback(index=>setViewer({index,slideshow:false}),[]);
+  const active=running&&!reduced&&!viewer&&!hidden&&inView&&photoIndices.length>1;
+  useEffect(()=>{
+    const update=()=>setHidden(document.hidden);
+    document.addEventListener('visibilitychange',update);
+    return()=>document.removeEventListener('visibilitychange',update);
+  },[]);
+
+  return <Section id="memories" number="03" eyebrow="THE MOMENTS WE KEEP" title={<>A Thousand Memories,<br/><em>One Beautiful You <span className="collage-heading-sparkle">✨</span></em></>} className="memory-section">
+    <div className="gallery-intro collage-intro">
+      <p>Some moments become memories. Some people<br/>{' '}make those memories unforgettable.</p>
+      <span className="collage-dedication"><Sparkles size={15} strokeWidth={1.25}/> A little universe, always unfolding.</span>
+    </div>
+    <div ref={wall} className="living-memory-wall" data-paused={!active}>
+      {photoIndices.length>0&&<MemoryCollage key={`${renderedCount}-${offset}`} indices={photoIndices} count={renderedCount} offset={offset} memories={memories} active={active} reduced={!!reduced} onOpen={openPhoto}/>}
+      <div className="collage-controls">
+        {!reduced&&photoIndices.length>1&&<button className="outline" onClick={()=>setRunning(value=>!value)} aria-pressed={!running}>{running?<Pause size={16}/>:<Play size={16}/>} {running?'Pause collage':'Play collage'}</button>}
+        {photoIndices.length>1&&<button className="text-button" onClick={()=>setOffset(value=>(value+(renderedCount<photoIndices.length?renderedCount:1))%photoIndices.length)}><Shuffle size={16}/> Shuffle memories</button>}
+        <button className="text-button" onClick={()=>setViewer({index:0,slideshow:true})}><Play size={15}/> Relive Memories</button>
+      </div>
+      {reduced&&<p className="collage-motion-note">A quieter little universe, following your reduced motion setting.</p>}
+    </div>
+    {videos.length>0?<div className="memory-video-collection" aria-label="Video memories">{videos.map(({memory,index})=><button className="collage-video" key={memory.id} onClick={()=>setViewer({index,slideshow:false})} aria-label={`Open video ${index+1} of ${memories.length}`}><VideoPreview memory={memory}/></button>)}</div>:<div className="video-space"><Film size={30} strokeWidth={1}/><h3>A little room for moving memories.</h3><p>Your videos will appear here alongside the photos.</p></div>}
+    {viewer&&<PhotoLightbox {...viewer} onClose={close} onMusic={onMusic}/>}
+  </Section>;
+}

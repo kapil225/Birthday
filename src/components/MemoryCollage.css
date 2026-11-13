@@ -1,0 +1,53 @@
+/* Only the Memories chapter uses these layouts and animation rules. */
+.chapter.memory-section{background:radial-gradient(ellipse at 90% 10%,#e7d6ed80,transparent 45%),radial-gradient(ellipse at 10% 90%,#f8e4da80,transparent 45%),#f4e9ee}
+.chapter.memory-section h2{font-size:clamp(40px,4.6vw,66px);line-height:1.1;letter-spacing:-1.6px;max-width:940px;text-wrap:balance}
+.collage-heading-sparkle{font-size:.6em;display:inline-block;vertical-align:middle;margin-left:4px}
+.collage-intro{margin-bottom:34px;gap:24px}
+.collage-intro>p{font-size:14px;line-height:1.8}
+.collage-dedication{font-family:'Caveat',cursive;font-size:22px;line-height:1.5;color:#a17b95;display:flex;gap:10px;align-items:center}
+.collage-dedication svg{flex-shrink:0;color:#b0966c}
+.living-memory-wall{position:relative}
+.memory-collage{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:110px;grid-auto-flow:dense;gap:18px;perspective:1400px;isolation:isolate}
+.collage-tile{position:relative;display:block;min-width:0;min-height:0;width:100%;height:100%;grid-column:span 1;grid-row:span 3;border-radius:15px;padding:0;border:1px solid #fff9;overflow:hidden;background:linear-gradient(135deg,#ecd6e4,#dbcde6);box-shadow:0 7px 24px #84567518,0 0 0 1px #d9b8cf25;color:white;perspective:1000px;transform-style:preserve-3d}
+.collage-tile-0,.collage-tile-5,.collage-tile-8{grid-column:span 1;grid-row:span 4}
+.collage-layer{position:absolute;inset:0;overflow:hidden;border-radius:inherit;transform-origin:center;backface-visibility:hidden;will-change:auto}
+.collage-layer img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 38%;animation:collage-zoom 16s ease-in-out infinite alternate,collage-float var(--float-duration,10s) ease-in-out var(--float-delay,0s) infinite}
+.collage-shine{position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px #fff5;z-index:2;background:linear-gradient(135deg,#fff1,transparent 40%)}
+.collage-tile:focus-visible{outline:3px solid #8e5f95;outline-offset:5px;z-index:4}
+.collage-paused .collage-tile,.collage-paused .collage-layer img{animation-play-state:paused}
+.collage-controls{display:flex;justify-content:center;align-items:center;gap:16px 24px;flex-wrap:wrap;margin-top:36px}
+.collage-controls .outline,.collage-controls .text-button{min-height:44px}
+.collage-motion-note{text-align:center;font-size:11px;color:#98778d;margin-top:12px;line-height:1.8}
+.collage-caption,.optional-memory-caption{position:absolute;inset:auto 0 0;margin:0;padding:28px 16px 16px;color:#fff7f9;font-family:'Caveat',cursive;font-size:22px;line-height:1.3;background:linear-gradient(transparent,#2d2133b3);z-index:3;pointer-events:none}
+.viewer-image:has(.optional-memory-caption){position:relative}
+.optional-memory-caption{font-size:25px;text-align:center}
+.memory-video-collection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:45px}
+.collage-video{aspect-ratio:4/3;overflow:hidden;border-radius:15px;padding:0;box-shadow:0 8px 24px #84567518}
+@keyframes collage-float{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes collage-zoom{from{transform:scale(1.035)}to{transform:scale(1.075)}}
+@media(min-width:601px) and (max-width:1000px){
+  .memory-collage{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:110px;gap:15px}
+  .collage-dedication{font-size:20px}
+}
+@media(max-width:760px){
+  .chapter.memory-section h2{font-size:clamp(32px,8vw,48px);letter-spacing:-.8px;line-height:1.14}
+  .collage-intro{margin-bottom:30px;gap:12px}
+  .collage-intro>p{font-size:14px}
+  .collage-controls{gap:8px 18px;margin-top:28px}
+  .collage-dedication{font-size:21px}
+  .collage-motion-note{font-size:12px}
+  .memory-video-collection{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+}
+@media(max-width:600px){
+  .memory-collage{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(64px,17vw,102px);gap:12px}
+  .collage-tile{border-radius:11px;grid-column:span 1;grid-row:span 3}
+  .collage-tile-0,.collage-tile-3{grid-column:span 1;grid-row:span 4}
+  .collage-caption{padding:20px 10px 10px;font-size:18px}
+}
+@media(max-width:370px){
+  .memory-video-collection{grid-template-columns:minmax(0,1fr)}
+  .collage-controls{gap:6px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .collage-tile,.collage-layer img{animation:none!important;transition:none!important}
+}

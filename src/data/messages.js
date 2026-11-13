@@ -1,4 +1,4 @@
-export const config = { birthday: null, music: '/music/little-universe.wav', placeholderCount: 100 };
+export const config = { birthday: null, music: '/music/happy-birthday-piano.wav', placeholderCount: 100 };
 export const letter = `Dear U,
 
 Happy Birthday! ❤️

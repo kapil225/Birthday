@@ -1,0 +1,172 @@
+/* Touch targets and safe-area spacing apply to phones, tablets, and desktop. */
+button,a,select{touch-action:manipulation}
+.icon-button{width:44px;height:44px;flex-shrink:0}
+.primary,.outline,.text-button,.sound-controls button,.top-nav a,.brand{min-height:44px}
+.sound-controls button{min-width:44px}
+.top-nav a{display:inline-flex;align-items:center}
+.cake-blow-button{position:absolute;z-index:6;inset:0 0 auto;width:100%;height:165px;background:transparent;border-radius:16px}
+.eyebrow{line-height:1.7;flex-wrap:wrap}
+.eyebrow>span,.eyebrow>i{flex-shrink:0}
+.modal{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-top:max(64px,calc(env(safe-area-inset-top) + 24px));padding-bottom:max(24px,env(safe-area-inset-bottom))}
+.modal-close{top:max(12px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right))}
+.photo-modal{display:grid;grid-template-rows:auto minmax(0,1fr) auto;justify-items:center;align-items:stretch;gap:16px;height:100dvh;padding-inline:max(16px,env(safe-area-inset-left));overflow:hidden}
+.viewer-top{width:min(100%,1000px);gap:16px;margin:0;align-items:center;padding-right:0;line-height:1.5}
+.viewer-top>span:first-child{flex:1;min-width:0}
+.viewer-top>span:last-child{white-space:nowrap}
+.viewer-image{height:100%;min-height:0;width:100%;max-height:none;align-self:stretch}
+.viewer-image img{width:100%;object-fit:contain}
+.viewer-controls,.viewer-image+.viewer-controls{margin:0;max-width:100%;flex-wrap:wrap;gap:12px}
+.viewer-controls select{min-height:44px;min-width:76px;font-size:16px}
+.viewer-controls label{min-height:44px;gap:8px;font-size:12px}
+.viewer-controls .text-button{min-height:44px;padding:10px 12px}
+.final-modal{padding-top:max(64px,calc(env(safe-area-inset-top) + 24px));padding-bottom:max(48px,calc(env(safe-area-inset-bottom) + 24px))}
+.final-modal>div{max-width:100%}
+.toast{bottom:max(24px,calc(env(safe-area-inset-bottom) + 12px))}
+@media(max-width:1050px){
+  /* The cake participates in document flow instead of covering tablet copy. */
+  .birthday-hero{display:flex;flex-direction:column;align-items:flex-start;min-height:0;padding-bottom:70px}
+  .hero-cake{position:relative;top:auto;right:auto;transform:none;align-self:center;margin:30px auto 0}
+  .hero-cake .cake-wrap{margin:0}
+  .scroll-note{position:static;max-width:100%;margin:36px 0 0;line-height:1.8}
+  .birthday-hero .secret-star{bottom:16px;right:6%}
+  .birthday-hero>p{max-width:100%}
+  .hero-actions{flex-wrap:wrap}
+  .balloon{pointer-events:none;opacity:.6}
+  .balloon-one{right:8%;top:150px}
+  .balloon-two{right:20%;top:250px}
+}
+@media(max-width:900px){
+  /* Six reachable chapter targets replace the tiny rail over the content. */
+  .chapter-progress{top:auto;bottom:max(10px,env(safe-area-inset-bottom));left:50%;right:auto;transform:translateX(-50%);flex-direction:row;width:min(calc(100% - 24px),420px);padding:5px 6px;gap:0;justify-content:space-between;border-radius:28px;background:#fff9f3ed;box-shadow:0 5px 30px #79536820}
+  .chapter-progress>a{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;flex-shrink:0}
+  .chapter-progress>a>span{width:7px;height:7px}
+  .chapter-progress>a.active{background:#eedce7}
+  .chapter-progress>a.active>span{box-shadow:none}
+  .chapter-progress .progress-start,.chapter-progress .progress-count,.chapter-progress b{display:none}
+  .toast{bottom:calc(max(10px,env(safe-area-inset-bottom)) + 70px)}
+  .journey footer{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+  .top-nav{display:none}
+}
+@media(max-width:760px){
+  html{scroll-padding-top:24px}
+  .site-header{gap:12px;padding:12px max(16px,env(safe-area-inset-left));height:auto;min-height:84px}
+  .brand{font-size:18px;min-width:0;gap:9px}
+  .brand-for{font-size:7px;letter-spacing:1.3px}
+  .sound-controls{gap:6px;flex-shrink:0}
+  .sound-controls button{height:44px;padding:10px}
+  .audio-error{max-width:min(260px,calc(100vw - 32px));font-size:13px}
+  .chapter{padding:64px 6%}
+  .chapter h2{font-size:clamp(36px,9.8vw,52px);line-height:1.1;letter-spacing:-1px;overflow-wrap:break-word}
+  .eyebrow{font-size:9px;letter-spacing:1.4px;gap:8px;justify-content:flex-start;line-height:1.8}
+  .letter-section .eyebrow,.wish-section .eyebrow,.appreciation-section .eyebrow,.final-section .eyebrow{justify-content:center}
+  .primary,.outline{font-size:13px;line-height:1.5;padding:14px 18px;max-width:100%}
+  .primary svg,.outline svg{flex-shrink:0}
+  .text-button{font-size:13px;line-height:1.5;padding:12px 8px}
+  .section-intro,.letter-section .section-intro,.gallery-intro p,.birthday-hero>p{font-size:14px;line-height:1.8}
+  .welcome-inner{display:grid;grid-template-columns:minmax(0,1fr);padding:32px 7% 28px;isolation:auto}
+  .welcome-copy{display:contents}
+  .welcome-copy>.eyebrow{order:1}
+  .welcome-copy>.hello{order:2;font-size:29px;margin-top:18px}
+  .welcome h1{order:3;font-size:clamp(49px,13vw,68px);line-height:1;max-width:100%;letter-spacing:-1.8px}
+  .heading-star{font-size:30px;margin-left:8px;bottom:8px}
+  .welcome .gift-scene{order:4;position:relative;top:auto;right:auto;width:100%;height:230px;scale:1;opacity:1;z-index:auto;margin:0}
+  .welcome .gift{scale:.72;top:39%;animation:none}
+  .welcome .orbit-one{width:220px;height:220px;top:50%}
+  .welcome .orbit-two{width:280px;height:160px;top:50%}
+  .welcome .gift-shadow{top:89%;width:155px}
+  .welcome .star-a{left:10%;top:20%;font-size:30px}
+  .welcome .star-b{right:8%;top:35%;font-size:20px}
+  .welcome .star-c{bottom:12%;left:15%}
+  .welcome-copy>.intro{order:5;max-width:100%;font-size:14px;margin-top:18px}
+  .promise{order:6;margin:20px 0;gap:10px}
+  .promise>svg{flex-shrink:0}
+  .promise strong,.promise p{font-size:12px;line-height:1.8}
+  .welcome-copy>.primary,.welcome-copy>.countdown{order:7;justify-self:start}
+  .made-with{order:8;font-size:10px;line-height:1.6;letter-spacing:.2px;margin-top:14px}
+  .welcome-bottom{font-size:8px;letter-spacing:1px;line-height:1.7}
+  .birthday-hero{padding:44px 6% 64px}
+  .birthday-hero h1{font-size:clamp(42px,10.8vw,68px);width:100%;letter-spacing:-1.5px;line-height:1.02}
+  .birthday-title{white-space:nowrap}
+  .birthday-hero>.script{font-size:clamp(22px,5.6vw,29px);margin:22px 0 14px}
+  .birthday-hero h1 em{font-size:1.7em}
+  .hero-heart{left:120px;bottom:4px;font-size:1.1em}
+  .hero-subtitle{font-size:16px!important;max-width:100%}
+  .hero-actions{gap:10px;margin-top:24px}
+  .hero-cake{margin-top:22px}
+  .scroll-note{font-size:8px;letter-spacing:1.4px;gap:12px}
+  .balloon-one{top:190px;right:7%;width:30px;height:42px}
+  .balloon-two{top:245px;right:12%;width:22px;height:31px}
+  .gallery-intro p br,.interlude p br,.wish-message h3 br{display:none}
+  .photo-track{margin-right:0;padding-right:2px;scroll-padding-inline:2px;-webkit-overflow-scrolling:touch}
+  .photo-slide{flex-basis:86%}
+  .video-space p{font-size:13px}
+  .interlude{padding:54px 7%}
+  .interlude p{font-size:28px}
+  .interlude>span{font-size:9px;line-height:1.8;display:block;max-width:280px;margin:auto}
+  .envelope{width:min(290px,100%);transform:none;margin:120px auto 34px}
+  .letter-paper{padding:34px 20px 28px}
+  .letter-paper p{font-size:21px;line-height:1.6;overflow-wrap:break-word}
+  .letter-paper .outline{padding-inline:12px}
+  .cake-wrap{width:100%;max-width:300px;scale:1;margin-top:32px}
+  .cake{left:50%;margin:0;transform:translateX(-50%)}
+  .wish-section .small-script{font-size:25px;line-height:1.3}
+  .wish-message{min-height:96px;margin-top:20px}
+  .wish-message h3{font-size:29px;line-height:1.2}
+  .wish-message p{font-size:14px;line-height:1.7}
+  .appreciation-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .appreciation-card{padding:30px 14px 20px;min-height:240px}
+  .appreciation-card h3{font-size:23px;min-height:0}
+  .appreciation-card p{font-size:17px;line-height:1.3}
+  .appreciation-card.revealed p{font-size:13px;line-height:1.7}
+  .note-number{font-size:10px}
+  .final-section .gift-scene.small{max-width:100%;scale:.85;margin:0 auto}
+  .final-hint{font-size:23px;line-height:1.5}
+  .viewer-top{font-size:9px;letter-spacing:1.3px;padding:0;margin:0}
+  .viewer-controls{width:100%;gap:8px}
+  .viewer-controls label{font-size:12px;margin-left:0}
+  .viewer-controls .text-button{flex-basis:100%;font-size:13px}
+  .final-modal{padding-inline:6%}
+  .final-modal .eyebrow{font-size:9px;letter-spacing:1.2px}
+  .final-modal h2{font-size:clamp(36px,10.5vw,52px);line-height:1.1}
+  .final-letter p{font-size:22px}
+  .final-modal h3{font-size:32px;line-height:1.3}
+  .toast:not(:empty){font-size:13px;min-width:0;width:calc(100% - 32px);padding:16px;line-height:1.6}
+  .toast svg{flex-shrink:0}
+  .toast small{font-size:10px;line-height:1.5}
+  footer>span{font-size:9px}
+}
+@media(max-width:370px){
+  .appreciation-grid{grid-template-columns:minmax(0,1fr)}
+  .appreciation-card{min-height:190px;padding:28px 24px}
+  .brand{font-size:16px;gap:7px}
+  .brand-for{font-size:6px}
+}
+@media(max-height:500px) and (orientation:landscape){
+  .photo-modal{padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));padding-inline:max(20px,env(safe-area-inset-left));gap:10px}
+  .viewer-top{padding-right:60px}
+  .viewer-controls .text-button{flex-basis:auto}
+  .viewer-controls{width:auto}
+  .chapter-progress{bottom:8px}
+}
+@media(hover:none){
+  .primary:hover,.outline:hover,.appreciation-card:hover{transform:none}
+  .photo-slide:hover img{transform:none}
+}
+@media(min-width:761px) and (max-width:1050px){
+  .intro,.birthday-hero>p,.gallery-intro p{font-size:14px}
+  .promise strong,.promise p{font-size:12px}
+}
+@media(min-width:901px){
+  .chapter-progress{padding:8px;gap:2px}
+  .chapter-progress>a{width:44px;height:44px;display:grid;place-items:center;flex-shrink:0}
+  .chapter-progress b{right:48px;top:12px}
+}
+/* Keep both landscape edges clear of notches, whichever way the phone turns. */
+.photo-modal{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+@media(max-width:760px){
+  .site-header{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  .chapter{padding-left:max(6%,env(safe-area-inset-left));padding-right:max(6%,env(safe-area-inset-right))}
+}
+@media(max-height:500px) and (orientation:landscape){
+  .photo-modal{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+}

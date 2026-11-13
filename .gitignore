@@ -5,3 +5,8 @@ dist/
 .env*
 test-results/
 playwright-report/
+# Keep high-resolution personal originals local; deploy optimized copies only.
+/photos/
+
+# Local private hosting identity; not needed for GitHub or Vercel.
+.openai/
